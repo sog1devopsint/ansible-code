@@ -1,2 +1,13 @@
 jdkpkg: [ 'java-1.8.0-openjdk', 'java-1.8.0-openjdk-devel', 'git' ]
 
+app_user: "app"
+app_group: "app"
+app_user_home: "/opt/app"
+app_user_bash: "/bin/nologin"
+tomcat_home_dir: "/opt/app/tomcat"
+tomcat_zip_download_path: "/opt"
+tomcat_version: "8.5.72"
+tomcat_url: "https://dlcdn.apache.org/tomcat/tomcat-8/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
+jre_path: "/usr/lib/jvm/jre"
+tomcat_app_user: "tomcat"
+tomcat_app_password: "devops123"

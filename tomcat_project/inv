@@ -1,4 +1,3 @@
 [app]
-172.31.91.1 ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/home/ec2-user/.ssh/vpc.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-172.31.80.121 ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/home/ec2-user/.ssh/vpc.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+172.31.28.51 ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/home/ec2-user/.ssh/vpc.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 

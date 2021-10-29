@@ -57,6 +57,6 @@
 <role rolename="manager-script"/>
 <role rolename="manager-jmx"/>
 <role rolename="manager-status"/>
-<user username="tomcat" password="devops123" roles="manager-gui,manager-script,manager-jmx,manager-status"/>
+<user username="{{ tomcat_app_user }}" password="{{ tomcat_app_password }}" roles="manager-gui,manager-script,manager-jmx,manager-status"/>
 </tomcat-users>
 

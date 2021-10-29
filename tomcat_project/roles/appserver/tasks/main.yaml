@@ -1,15 +1,15 @@
 ---
 - name: create user "app" and home dir will /opt/app and its a /bin/nologin
   user:
-    name: app
-    comment: app
-    home: /opt/app
-    shell: /bin/nologin
+    name: "{{ app_user }}"
+    comment: "{{ app_user }}"
+    home: "{{ app_user_home }}"
+    shell: "{{ app_user_bash }}"
     state: present
 
 - name: crete group app
   group: 
-    name: app
+    name: "{{ app_group }}"
     state: present
 
 - name: Create a app directory if it does not exist
@@ -17,45 +17,45 @@
     path: /opt/app/tomcat
     state: directory
     mode: '0755'
-    owner: app
-    group: app
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
 
 - name: Download tomcat tar.gz file from internet
   get_url:
-    url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.72/bin/apache-tomcat-8.5.72.tar.gz
-    dest: /opt
+    url: "{{ tomcat_url }}"
+    dest: "{{ tomcat_zip_download_path }}"
     mode: '0440'
 
 - name: Unarchive tomcat tar file that is already on the remote machine
   unarchive:
-    src: /opt/apache-tomcat-8.5.72.tar.gz
-    dest: /opt/app/tomcat
+    src:  "{{ tomcat_zip_download_path }}/apache-tomcat-{{ tomcat_version }}.tar.gz"
+    dest: "{{ tomcat_home_dir }}"
     remote_src: yes
 
 - name: Recursively change ownership of a directory
   file:
-    path: /opt/app
+    path: "{{ app_user_home }}"
     state: directory
     recurse: yes
-    owner: app
-    group: app
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
 
 
 - name: copy tomcat-users.xml
   template:
     src: tomcat-users.xml.j2
-    dest: /opt/app/tomcat/apache-tomcat-8.5.72/conf/tomcat-users.xml
-    owner: app
-    group: app
+    dest: "{{ tomcat_home_dir }}/apache-tomcat-{{ tomcat_version }}/conf/tomcat-users.xml"
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
     mode: '0644'
   notify: restart tomcat
 
 - name: copy context.xml
   template:
     src: context.xml.j2
-    dest: /opt/app/tomcat/apache-tomcat-8.5.72/webapps/manager/META-INF/context.xml
-    owner: app
-    group: app
+    dest: "{{ tomcat_home_dir }}/apache-tomcat-{{ tomcat_version }}/webapps/manager/META-INF/context.xml"
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
     mode: '0644'
   notify: restart tomcat
 
@@ -74,6 +74,5 @@
     name: tomcat
     state: started
     enabled: yes
-
 
 
