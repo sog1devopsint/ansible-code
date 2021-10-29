@@ -1,17 +1,8 @@
 ---
 - name: Install apache webserver
-  yum:
-    name: httpd
-    state: present
-- name: Copy file with owner and permissions
-  template:
-    src: index.html.j2
-    dest: /var/www/html/index.html
-    owner: root
-    group: root
-    mode: '0644'
-- name: Start and enable httpd service
-  service:
-    name: httpd
-    state: started
-    enabled: yes
+  include: "{{ ansible_os_family }}.yaml"
+  when: ansible_os_family == "RedHat"
+
+- name: Install apache webserver
+  include: "{{ ansible_os_family }}.yaml"
+  when: ansible_os_family == "Debian"
